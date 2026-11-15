@@ -1,0 +1,13 @@
+diff --git a/build/Makefile.common b/build/Makefile.common
+index c36c3d6..6c5e30a 100644
+--- a/build/Makefile.common
++++ b/build/Makefile.common
+@@ -73,7 +73,7 @@ endif
+ # platforms - so they must stay out of the core there or the final
+ # link sees every symbol twice. hdpack.c only reaches the decoders through the
+ # image_transfer interface, which the frontend always provides.
+-ifeq ($(STATIC_LINKING),1)
++ifeq ($(STATIC_LINKING),2)
+ else
+ SOURCES_C += \
+ 	$(LIBRETRO_COMM_DIR)/formats/png/rpng.c \

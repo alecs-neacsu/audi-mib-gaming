@@ -1,0 +1,84 @@
+diff --git a/libpcsxcore/cheat.c b/libpcsxcore/cheat.c
+index e78195e..95c58e2 100644
+--- a/libpcsxcore/cheat.c
++++ b/libpcsxcore/cheat.c
+@@ -219,11 +219,11 @@ void ApplyCheats() {
+ 
+ 			switch (type) {
+ 				case CHEAT_CONST8:
+-					psxMu8ref(addr) = (u8)val;
++					if (psxMu8(addr) != (u8)val) { psxMu8ref(addr) = (u8)val; psxCpu->Clear(addr & ~3, 1); }  /* MIB: invalidez codul recompilat */
+ 					break;
+ 
+ 				case CHEAT_CONST16:
+-					psxMu16ref(addr) = SWAPu16(val);
++					if (psxMu16(addr) != val) { psxMu16ref(addr) = SWAPu16(val); psxCpu->Clear(addr & ~3, 1); }
+ 					break;
+ 
+ 				case CHEAT_SCRATCHPAD16: // 1F
+diff --git a/libpcsxcore/gte.c b/libpcsxcore/gte.c
+index 357eb16..6f1c2ea 100644
+--- a/libpcsxcore/gte.c
++++ b/libpcsxcore/gte.c
+@@ -565,6 +565,13 @@ static u32 gteMAC123f(psxCP2Regs *regs, s32 vx, s32 vy, s32 vz,
+ 
+ #endif
+ 
++/* widescreen la nivel GTE (ca "Widescreen Hack" din DuckStation): X proiectat * 3/4 fata de centru */
++#ifndef FLAGLESS
++int gte_widescreen = 0;
++#else
++extern int gte_widescreen;
++#endif
++#define WSX(p) (gte_widescreen ? (((p) * 3) >> 2) : (p))
+ static inline force_inline void gteRTPS(psxCP2Regs *regs, int shift, int lm)
+ {
+ 	s32 vx = gteVX0, vy = gteVY0, vz = gteVZ0;
+@@ -592,7 +599,7 @@ static inline force_inline void gteRTPS(psxCP2Regs *regs, int shift, int lm)
+ 	gteSXY0 = gteSXY1;
+ 	gteSXY1 = gteSXY2;
+ 
+-	gteSX2 = limG1(&flags, mac0flags(&flags, gteOFX + (s64)gteIR1 * quotient) >> 16);
++	gteSX2 = limG1(&flags, mac0flags(&flags, gteOFX + WSX((s64)gteIR1 * quotient)) >> 16);
+ 	gteSY2 = limG2(&flags, mac0flags(&flags, gteOFY + (s64)gteIR2 * quotient) >> 16);
+ 
+ 	gteMAC0 = mac0 = mac0flags(&flags, gteDQB + (s64)gteDQA * quotient);
+@@ -628,7 +635,7 @@ static inline force_inline void gteRTPT(psxCP2Regs *regs, int shift, int lm)
+ 		sz3 = limD(&flags, sz3);
+ 		quotient = divide(&flags, h, sz3);
+ 		fSZ(v) = sz3;
+-		fSX(v) = limG1(&flags, mac0flags(&flags, gteOFX + (s64)ir1 * quotient) >> 16);
++		fSX(v) = limG1(&flags, mac0flags(&flags, gteOFX + WSX((s64)ir1 * quotient)) >> 16);
+ 		fSY(v) = limG2(&flags, mac0flags(&flags, gteOFY + (s64)ir2 * quotient) >> 16);
+ 	}
+ 
+diff --git a/libpcsxcore/new_dynarec/assem_arm.c b/libpcsxcore/new_dynarec/assem_arm.c
+index 6719602..ad4c007 100644
+--- a/libpcsxcore/new_dynarec/assem_arm.c
++++ b/libpcsxcore/new_dynarec/assem_arm.c
+@@ -19,6 +19,7 @@
+  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
+  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+ 
++extern int gte_widescreen;
+ #include <strings.h> // ffs
+ #define FLAGLESS
+ #include "../gte.h"
+@@ -2070,7 +2071,7 @@ static void c2op_assemble(struct compile_state *st, int i, const struct regstat
+       }
+ #endif // HAVE_ARMV5
+       case GTEOP_RTPS:
+-        if (shift && !lm) {
++        if (shift && !lm && !gte_widescreen) {
+ #if defined(__ARM_NEON__)
+           handler = need_flags ? gteRTPS_sf1lm0_neon : gteRTPS_sf1lm0_nf_neon;
+ #elif defined(HAVE_ARMV5)
+@@ -2079,7 +2080,7 @@ static void c2op_assemble(struct compile_state *st, int i, const struct regstat
+         }
+         goto do_handler;
+       case GTEOP_RTPT:
+-        if (shift && !lm) {
++        if (shift && !lm && !gte_widescreen) {
+ #if defined(__ARM_NEON__)
+           handler = need_flags ? gteRTPT_sf1lm0_neon : gteRTPT_sf1lm0_nf_neon;
+ #elif defined(HAVE_ARMV5)

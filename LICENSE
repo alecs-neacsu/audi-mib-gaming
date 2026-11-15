@@ -1,0 +1,41 @@
+audi-mib-gaming – licences
+==========================
+
+This repository contains parts under different licences.
+
+1. Launcher and emulator programs: game/sys/psxfe, game/sys/snesfe; source in source/launcher
+   - The launcher source (psxfe.c, font.h, runsafe_arm.S) is licensed under the GNU General Public License,
+     version 2 or later (licenses/GPL-2.0.txt), with the additional permission stated at the top of psxfe.c.
+   - game/sys/psxfe contains PCSX ReARMed (GNU GPL v2). The whole program is distributed under the GNU GPL v2.
+     Source: source/launcher + source/cores (upstream commit and patch).
+   - game/sys/snesfe contains Snes9x 2010, distributed under the Snes9x licence (licenses/Snes9x-LICENSE.txt):
+     non-commercial use only. Source: source/launcher + source/cores (upstream commit and patch).
+   - stb_image.h and stb_truetype.h (Sean Barrett): public domain / MIT, see the end of each file.
+   - libretro.h: MIT, see the file.
+
+2. Everything else written for this project - mod/command.sh, game/lansator.sh, source/mkbridge,
+   game/punte/mkbridge, game/punte/bridge_classes.zip, game/sys/ds3d, the icons, background and bezel images,
+   the documentation - is under the MIT licence:
+
+   Copyright (c) 2026 the audi-mib-gaming author
+
+   Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
+   documentation files (the "Software"), to deal in the Software without restriction, including without limitation
+   the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and
+   to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+   The above copyright notice and this permission notice shall be included in all copies or substantial portions of
+   the Software.
+
+   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO
+   THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+   TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+   SOFTWARE.
+
+3. game/sys/font.otf is the Inter typeface, SIL Open Font License 1.1 (licenses/OFL-1.1.txt).
+
+No file from the Audi firmware is included. The installer builds the modified file on the head unit from the
+unit's own original.
+
+This project is not affiliated with, endorsed by, or supported by Audi AG, Volkswagen AG, Sony or Nintendo.

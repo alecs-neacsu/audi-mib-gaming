@@ -1,0 +1,1 @@
+PlayStation 1 BIOS goes in this folder: scph1001.bin (not included).

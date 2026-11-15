@@ -1,2 +1,19 @@
-# Auto detect text files and perform LF normalization
-* text=auto
+# Scripts run on the head unit's QNX shell: they must keep LF line endings on every platform.
+*.sh  text eol=lf
+*.txt text eol=lf
+*.md  text
+# Everything the unit loads is binary and must never be touched by line-ending conversion.
+*.jar     binary
+*.orig    binary
+*.png     binary
+*.jpg     binary
+*.otf     binary
+game/sys/psxfe   binary
+game/sys/snesfe  binary
+game/sys/ds3d    binary
+game/punte/mkbridge  binary
+*.zip     binary
+*.c       text eol=lf
+*.h       text eol=lf
+*.S       text eol=lf
+*.patch   text eol=lf

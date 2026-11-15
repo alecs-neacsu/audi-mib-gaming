@@ -1,0 +1,3 @@
+Super Nintendo games go in this folder.
+Formats: .sfc, .smc
+Icon (optional): a .png with the same name as the game file, e.g. Aladdin.sfc + Aladdin.png

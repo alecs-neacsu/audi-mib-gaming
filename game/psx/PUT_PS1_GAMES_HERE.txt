@@ -1,0 +1,4 @@
+PlayStation 1 games go in this folder.
+Formats: .chd, .cue + .bin, .pbp, .iso
+Icon (optional): a .png with the same name as the game file, e.g. Aladdin.cue + Aladdin.bin + Aladdin.png
+Order (optional): ordine.txt in this folder, one game name per line (without extension).
