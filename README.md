@@ -2,7 +2,19 @@
 
 A PS1 and SNES game launcher for the **Audi MIB2 High** head unit. Games run from the SD card, are played with a wired DualShock 3, and only with the car parked.
 
-No games and no PlayStation BIOS are included. You add your own.
+![The game launcher on the MMI screen of an Audi A5](docs/launcher.jpg)
+
+*The launcher on the author's car, running the full personal setup. The kit in this repository uses a plain background and lists only the PS1 and SNES games you add; the native ports seen in the picture are not part of it.*
+
+## Not included – you must supply these yourself
+
+| What | Where it goes | Needed for |
+|---|---|---|
+| **PlayStation BIOS** `scph1001.bin` | `game/bios/` | PS1 games. Without it PS1 games may not start or may not run correctly. |
+| **Your PS1 games** | `game/psx/` | Anything to appear in the list as PSX. |
+| **Your SNES games** | `game/snes/` | Anything to appear in the list as SNES. SNES needs no BIOS. |
+
+The BIOS and the games are copyrighted by their owners. This repository does not contain them and never will; use files you are entitled to use.
 
 ---
 
@@ -53,7 +65,7 @@ Everything else (launcher, emulators, games, saves) stays on the SD card.
 - Green Menu enabled and the M.I.B. tool installed on the unit.
 - The M.I.B. SD card, in slot **SD1**. It must stay in the slot to use the games.
 - A DualShock 3 (PS3) controller on a USB cable.
-- Your own PS1 BIOS (`scph1001.bin`) and your own games.
+- Your own PS1 BIOS (`scph1001.bin`) and your own games – **not included**, see the table at the top.
 
 ## Setup
 
